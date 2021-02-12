@@ -10,8 +10,9 @@ nnoremap('<C-p>', '<cmd>Telescope find_files<CR>')
 nnoremap('<leader>;', '<cmd>Telescope buffers<CR>')
 
 -- Diagnostics
-nnoremap('<leader>dn', ':NextDiagnosticCycle<CR>')
-nnoremap('<leader>dp', ':PrevDiagnosticCycle<CR>')
+nnoremap('<leader>dn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+nnoremap('<leader>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+nnoremap('<leader>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 
 -- Search Project
 nnoremap('<leader>sp', '<cmd>Telescope live_grep<CR>')
