@@ -1,21 +1,23 @@
 #!/usr/bin/fish
 
 set fish_greeting
-set -gx PATH $HOME/bin $GOPATH/bin $HOME/.local/bin $HOME/.pulumi/bin $HOME/.cargo/bin $HOME/.istioctl/bin /usr/local/bin $PATH
-set -gx CLOUDPATH $HOME/src/CloudExperiments
-set -gx KDEV_KUBE_CONTEXT docker-desktop
-# set -g fish_user_paths "/usr/local/opt/node@12/bin" $fish_user_paths
 
 set -gx BARX_NO_REMOTE_CACHE 1
 set -gx NVM_DIR $HOME/.local/nvm
 set -gx SHELL /usr/local/bin/fish
-set -gx GOPATH $HOME/src/go
 set -gx EDITOR nvim
+set -gx GOPATH $HOME/src/go
+set -gx CLOUDPATH $GOPATH/src/github.com/supersparks/CloudExperiments
+set -gx KDEV_KUBE_CONTEXT docker-desktop
 set -gx FZF_DEFAULT_COMMAND 'rg --files'
 set -gx FZF_DEAFULT_OPTS ' --no-exact'
 set -gx GPG_TTY (tty)
 
-alias cat    'bat -pp --theme Dracula'
+set -gx PATH $HOME/bin $GOPATH/bin $HOME/.local/bin $HOME/.pulumi/bin $HOME/.cargo/bin $HOME/.istioctl/bin /usr/local/bin $PATH
+
+alias bat    'bat --theme Dracula'
+alias cat    'bat -pp'
+alias cdc    'cd $GOPATH/src/github.com/supersparks/CloudExperiments'
 alias ga     'git add'
 alias gapa   'git add -p'
 alias gcm    'git commit -S -m'
