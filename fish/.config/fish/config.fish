@@ -17,7 +17,7 @@ set -gx PATH $HOME/bin $GOPATH/bin $HOME/.local/bin $HOME/.pulumi/bin $HOME/.car
 
 alias bat    'bat --theme Dracula'
 alias cat    'bat -pp'
-alias cdc    'cd $GOPATH/src/github.com/supersparks/CloudExperiments'
+alias cdc    'cd $CLOUDPATH'
 alias ga     'git add'
 alias gapa   'git add -p'
 alias gcm    'git commit -S -m'
@@ -37,8 +37,8 @@ alias ls     'lsd --group-dirs first'
 alias vi     'nvim'
 alias vim    'nvim'
 
-alias kdev $HOME/src/CloudExperiments/kdev.sh
-alias barx $HOME/src/CloudExperiments/barx.sh
+alias kdev $CLOUDPATH/kdev.sh
+alias barx $CLOUDPATH/barx.sh
 
 fzf_key_bindings
 starship init fish | source
