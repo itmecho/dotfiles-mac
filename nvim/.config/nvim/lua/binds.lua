@@ -15,15 +15,17 @@ nnoremap('<leader>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 nnoremap('<leader>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 
 -- Search Project
-nnoremap('<leader>sp', '<cmd>Telescope live_grep<CR>')
-vim.api.nvim_set_keymap('v', '<leader>sp', 'y:Telescope live_grep<CR><C-R>0', { noremap = true })
+nnoremap('<leader>si', '<cmd>Telescope live_grep<CR>')
+vim.api.nvim_set_keymap('v', '<leader>si', 'y:Telescope live_grep<CR><C-R>0', { noremap = true })
 
 -- Search Tags
 nnoremap('<leader>st', '<cmd>Telescope tags<CR>')
 
 -- Terminal Toggle
 nnoremap('<leader>tt', '<cmd>BufTermToggle<CR>')
+nnoremap('<leader>tn', '<cmd>BufTermToggle<CR><C-\\><C-n>')
 vim.api.nvim_set_keymap('t', '<leader>tt', '<cmd>BufTermToggle<CR>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<leader>tn', '<C-\\><C-n>', { noremap = true })
 
 -- LSP Bindings
 nnoremap('<leader>vd', '<cmd>lua vim.lsp.buf.definition()<CR>')
