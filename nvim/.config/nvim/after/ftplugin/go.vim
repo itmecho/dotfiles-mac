@@ -1,11 +1,17 @@
-set textwidth=80
-set colorcolumn=80
+set textwidth=100
+set colorcolumn=100
 set noexpandtab
 set ts=4
 set shiftwidth=4
 set softtabstop=4
 
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+function! GoLines()
+	let l:view = winsaveview()
+	silent execute '%!golines'
+	if v:shell_error != 0
+		undo
+	endif
+	call winrestview(l:view)
+endfunction
 
-nnoremap <buffer> <leader>cc :call RnrExec("go build")<CR>
-nnoremap <buffer> <leader>ct :call RnrExec("go test ./...")<CR>
+autocmd BufWritePre *.go call GoLines()
