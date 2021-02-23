@@ -15,8 +15,10 @@ nnoremap('<leader>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 nnoremap('<leader>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 
 -- Search Project
-nnoremap('<leader>si', '<cmd>Telescope live_grep<CR>')
-vim.api.nvim_set_keymap('v', '<leader>si', 'y:Telescope live_grep<CR><C-R>0', { noremap = true })
+-- nnoremap('<leader>si', '<cmd>Telescope live_grep<CR>')
+-- vim.api.nvim_set_keymap('v', '<leader>si', 'y:Telescope live_grep<CR><C-R>0', { noremap = true })
+nnoremap('<leader>si', '<cmd>Rg<CR>')
+vim.api.nvim_set_keymap('v', '<leader>si', 'y:Rg<CR><C-R>0', { noremap = true })
 
 -- Search Tags
 nnoremap('<leader>st', '<cmd>Telescope tags<CR>')
