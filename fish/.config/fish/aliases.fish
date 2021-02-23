@@ -1,0 +1,27 @@
+alias bat     'bat --theme Dracula'
+alias cat     'bat -pp'
+alias cdc     'cd $CLOUDPATH'
+alias cdcp    'cd (cd $CLOUDPATH; fd --max-depth 2 --type d | fzf)'
+alias cdn     'cd ~/Documents/notes'
+alias ga      'git add'
+alias gapa    'git add -p'
+alias gcm     'git commit -S -m'
+alias gco     'git checkout'
+alias gd      'git diff'
+alias gdca    'git diff --cached'
+alias gl      'git pull'
+alias gp      'git push'
+alias gpnew   'git push -u origin (git rev-parse --abbrev-ref HEAD)'
+alias gs      'git status'
+alias k       'kubectl'
+alias kn      'kubens'
+alias kx      'kubectx'
+alias l       'ls -lh'
+alias ll      'ls -lAh'
+alias ls      'lsd --group-dirs first'
+alias uuidgen "uuidgen | tr '[:upper:]' '[:lower:]'"
+alias vi      'nvim'
+alias vim     'nvim'
+
+alias kdev $CLOUDPATH/kdev.sh
+alias barx $CLOUDPATH/barx.sh
