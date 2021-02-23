@@ -3,8 +3,6 @@ add_newline = false
 format = """
 $directory\
 $git_branch\
-$git_state\
-$git_status\
 $kubernetes\
 $cmd_duration\
 $line_break\
