@@ -4,10 +4,6 @@ require('nvim-treesitter.configs').setup({
 	}
 })
 
-require('nvim-web-devicons').setup({
-	default = true;
-})
-
 require('telescope').setup({
 	color_devicons = true;
 	shorten_path = true;

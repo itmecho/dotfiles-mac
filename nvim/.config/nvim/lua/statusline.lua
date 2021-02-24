@@ -92,13 +92,16 @@ end
 
 local function statusline()
 	local filename = vim.api.nvim_eval('expand("%:p:t")')
-	local icon, icon_hl = require'nvim-web-devicons'.get_icon(filename, vim.bo.filetype)
+	local ext = vim.api.nvim_eval('expand("%:e")')
+	local icon, icon_hl = require'nvim-web-devicons'.get_icon(filename, ext)
 	local lsp_seg = lsp_segment()
 	local diag_seg = diagnostic_counts()
 
 	local content = ''
 	content = content .. '%#DraculaPurple#%#WildMenu#' .. get_mode() .. '%#DraculaPurple#'
-	content = content .. string.format("%%#%s# %s", icon_hl, icon)
+	if icon ~= nil then
+		content = content .. string.format("%%#%s# %s", icon_hl, icon)
+	end
 	content = content .. '%#LineNr# %t'
 	content = content .. '%='
 	if lsp_seg == '' and diag_seg == '' then
