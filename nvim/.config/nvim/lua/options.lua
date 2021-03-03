@@ -4,7 +4,6 @@ vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.incsearch = true
 vim.o.mouse = ''
-vim.o.rtp = vim.o.rtp .. '/usr/local/bin/rg'
 vim.o.scrolloff = 50
 vim.o.shell = '/usr/local/bin/fish'
 vim.o.shiftwidth = 4

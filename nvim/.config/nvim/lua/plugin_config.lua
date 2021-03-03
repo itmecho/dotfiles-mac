@@ -1,3 +1,5 @@
+require('nvim-web-devicons').setup()
+
 require('nvim-treesitter.configs').setup({
 	highlight = {
 		enable = true;
@@ -10,3 +12,4 @@ require('telescope').setup({
 })
 
 require('telescope').load_extension('fzy_native')
+
