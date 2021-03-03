@@ -4,10 +4,11 @@ function start-local
 	kdev supervisor ctl start all
 	kdev db ctl start
 	echo 'Waiting for kubernetes to start'
-	while ! kubectl get nodes &>/dev/null;
+	while ! kubectl --context docker-desktop get nodes &>/dev/null;
 		echo -n '.'
 		sleep 5
 	end
 	echo
+	kubectx docker-desktop
 	kubens sparx
 end
