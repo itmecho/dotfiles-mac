@@ -1,4 +1,4 @@
-local function get_mode()
+local function mode_segment()
 	local current = vim.api.nvim_get_mode().mode
 	local mode_map = {
 		n = {
@@ -27,7 +27,7 @@ local function get_mode()
 		},
 	}
 
-	mode = mode_map[current]
+	local mode = mode_map[current]
 	local content = ''
 
 	if mode == nil then
@@ -41,9 +41,33 @@ local function get_mode()
 	return content
 end
 
+local function file_segment()
+	local filename = vim.fn.expand('%:p:t')
+	local ext = vim.fn.expand('%:e')
+	local icon, icon_hl = require'nvim-web-devicons'.get_icon(filename, ext)
+	local output = ''
+	if icon ~= nil then
+		 output = output .. string.format('%%#%s#%s', icon_hl, icon)
+	end
+
+	return output .. '%#LineNr# %f'
+end
+
+local function project_dir_segment()
+	local prefix = '%#LineNr#   '
+	local full_path = vim.call('FindRootDirectory')
+	local parts = vim.fn.split(full_path, '/')
+
+	if parts[#parts] then
+		return prefix .. parts[#parts]
+	else
+		return ''
+	end
+end
+
 local function lsp_segment()
 	local status_prefix = '%#DraculaDiffText#  '
-	local ok_message = '%#DraculaSearch#  '
+	local ok_message = '%#DraculaGreen#  '
 
 	if #vim.lsp.buf_get_clients() == 0 then
 		return ''
@@ -97,13 +121,17 @@ local function lsp_segment()
 	return ok_message
 end
 
-local function diagnostic_counts()
+local function diagnostic_segment()
 	local hint_count = vim.lsp.diagnostic.get_count(0, [[Hint]])
 	local info_count = vim.lsp.diagnostic.get_count(0, [[Information]])
 	local warn_count = vim.lsp.diagnostic.get_count(0, [[Warning]])
 	local error_count = vim.lsp.diagnostic.get_count(0, [[Error]])
 
 	local content = ''
+
+	if (hint_count + info_count + warn_count + error_count) == 0 then
+		return content
+	end
 
 	if hint_count > 0 or info_count > 0 then
 		content = content .. '%#DraculaTodo# ' .. hint_count + info_count .. ' '
@@ -120,41 +148,26 @@ local function diagnostic_counts()
 	return content
 end
 
-local function project_dir()
-	local prefix = '%#LineNr#   '
-	local full_path = vim.call('FindRootDirectory')
-	local parts = {}
-	for match in (full_path..'/'):gmatch('([^/]+)') do
-		table.insert(parts, match)
-	end
-
-	if parts[#parts] then
-		return prefix .. parts[#parts] .. ' '
-	else return '' end
+local function line_number_segment()
+	return '%#WildMenu# %l:%c '
 end
 
 function _G.statusline()
-	local filename = vim.api.nvim_eval('expand("%:p:t")')
-	local ext = vim.api.nvim_eval('expand("%:e")')
-	local icon, icon_hl = require'nvim-web-devicons'.get_icon(filename, ext)
-	local lsp_seg = lsp_segment()
-	local diag_seg = diagnostic_counts()
+	local segments = {
+		mode_segment(),
+		file_segment(),
+		'%=',
+		project_dir_segment(),
+		lsp_segment(),
+		diagnostic_segment(),
+		line_number_segment(),
+	};
 
-	local content = ''
-	content = content .. get_mode()
-	if icon ~= nil then
-		content = content .. string.format("%%#%s# %s", icon_hl, icon)
-	end
-	content = content .. '%#LineNr# %f'
-	content = content .. '%='
-	content = content .. project_dir()
-	if lsp_seg == '' and diag_seg == '' then
-		content = content .. '%#WildMenu# %c:%l '
-	else
-		content = content .. lsp_segment()
-		content = content .. diagnostic_counts()
-		content = content .. '%#WildMenu# %l:%c '
+	for i = 1, #segments, 1 do
+		if segments[i] == '' or segments[i] == nil then
+			table.remove(segments, i)
+		end
 	end
 
-	return content
+	return table.concat(segments, ' ')
 end
