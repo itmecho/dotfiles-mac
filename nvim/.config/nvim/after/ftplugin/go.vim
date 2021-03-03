@@ -14,4 +14,14 @@ function! GoLines()
 	call winrestview(l:view)
 endfunction
 
-autocmd BufWritePre *.go call GoLines()
+function! GoFmt()
+	let l:view = winsaveview()
+	silent execute '%!gofmt'
+	if v:shell_error != 0
+		undo
+	endif
+	call winrestview(l:view)
+endfunction
+
+autocmd BufWritePre *.go call GoFmt()
+autocmd BufWritePre *.go call GoFmt()

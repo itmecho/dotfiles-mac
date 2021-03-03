@@ -1,23 +1,49 @@
 local function get_mode()
 	local current = vim.api.nvim_get_mode().mode
 	local mode_map = {
-		n = 'NORMAL',
-		i = 'INSERT',
-		c = 'COMMAND',
-		t = 'TERMINAL',
-		v = 'VISUAL',
+		n = {
+			name = 'NORMAL',
+			color = 'WildMenu',
+		},
+		i = {
+			name = 'INSERT',
+			color = 'DraculaTodo',
+		},
+		c = {
+			name = 'COMMAND',
+			color = 'DraculaDiffText',
+		},
+		t = {
+			name = 'TERMINAL',
+			color = 'DraculaOrangeInverse',
+		},
+		v = {
+			name = 'VISUAL',
+			color = 'DraculaSearch',
+		},
+		V = {
+			name = 'VISUAL LINE',
+			color = 'DraculaSearch',
+		},
 	}
 
-	if mode_map[current] == nil then
-		return 'UNKNOWN: ' .. current
+	mode = mode_map[current]
+	local content = ''
+
+	if mode == nil then
+		content = string.format('%%#DraculaRedInverse# UNKNOWN: %s', current)
+	else
+		content = string.format('%%#%s# %s', mode.color, mode.name)
 	end
 
-	return mode_map[current]
+	content = content .. ' %#LineNr#'
+
+	return content
 end
 
 local function lsp_segment()
-	local status_prefix = '%#DraculaOrange#%#DraculaDiffText# '
-	local ok_message = '%#DraculaGreen#%#DraculaSearch# '
+	local status_prefix = '%#DraculaDiffText#  '
+	local ok_message = '%#DraculaSearch#  '
 
 	if #vim.lsp.buf_get_clients() == 0 then
 		return ''
@@ -30,6 +56,10 @@ local function lsp_segment()
 		local client_name = '[' .. msg.name .. ']'
 		local contents = ''
 		if msg.progress then
+			if msg.title ~= 'Error loading workspace' then
+				print(msg.message)
+			end
+
 			contents = msg.title
 
 			if msg.message then
@@ -90,7 +120,20 @@ local function diagnostic_counts()
 	return content
 end
 
-local function statusline()
+local function project_dir()
+	local prefix = '%#LineNr#   '
+	local full_path = vim.call('FindRootDirectory')
+	local parts = {}
+	for match in (full_path..'/'):gmatch('([^/]+)') do
+		table.insert(parts, match)
+	end
+
+	if parts[#parts] then
+		return prefix .. parts[#parts] .. ' '
+	else return '' end
+end
+
+function _G.statusline()
 	local filename = vim.api.nvim_eval('expand("%:p:t")')
 	local ext = vim.api.nvim_eval('expand("%:e")')
 	local icon, icon_hl = require'nvim-web-devicons'.get_icon(filename, ext)
@@ -98,25 +141,20 @@ local function statusline()
 	local diag_seg = diagnostic_counts()
 
 	local content = ''
-	content = content .. '%#DraculaPurple#%#WildMenu#' .. get_mode() .. '%#DraculaPurple#'
+	content = content .. get_mode()
 	if icon ~= nil then
 		content = content .. string.format("%%#%s# %s", icon_hl, icon)
 	end
-	content = content .. '%#LineNr# %t'
+	content = content .. '%#LineNr# %f'
 	content = content .. '%='
+	content = content .. project_dir()
 	if lsp_seg == '' and diag_seg == '' then
-		content = content .. '%#DraculaPurple#%#WildMenu#%c:%l%#DraculaPurple#'
+		content = content .. '%#WildMenu# %c:%l '
 	else
 		content = content .. lsp_segment()
 		content = content .. diagnostic_counts()
-		content = content .. '%#WildMenu# %l:%c%#DraculaPurple#'
+		content = content .. '%#WildMenu# %l:%c '
 	end
 
 	return content
 end
-
-local M = {
-	status = statusline;
-}
-
-return M
