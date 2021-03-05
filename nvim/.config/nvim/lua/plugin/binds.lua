@@ -65,7 +65,7 @@ keymap("n", "<leader>vx", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clien
 keymap("n", "<leader>gs", "<cmd>Gstatus<CR>")
 keymap("n", "<leader>gl", "<cmd>G pull<CR>")
 keymap("n", "<leader>gp", "<cmd>G push<CR>")
-keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>")
+keymap("n", "<leader>gb", "<cmd>lua require('itmecho.telescope').git_branches()<CR>")
 
 -- Disable arrow keys
 local keys = {"<up>", "<down>", "<left>", "<right>"}

@@ -1,10 +1,12 @@
 local M = {}
 
 M.search_string = function()
-    require('telescope.builtin').grep_string({
-        prompt_title = 'Filter Results',
-        search = vim.fn.input('Search for: ')
-    })
+    require("telescope.builtin").grep_string(
+        {
+            prompt_title = "Filter Results",
+            search = vim.fn.input("Search for: ")
+        }
+    )
 end
 
 M.search_nvim_config = function()
@@ -32,11 +34,22 @@ M.cd_to_project = function()
                             require("telescope.actions.state").get_selected_entry(bufnr).value
                         vim.cmd("cd " .. path)
                         require("telescope.actions").close(prompt_bufnr)
-                        local parts = vim.fn.split(path, '/')
+                        local parts = vim.fn.split(path, "/")
                         vim.g.itmecho_project = parts[#parts]
                         print("project: " .. path)
                     end
                 )
+                return true
+            end
+        }
+    )
+end
+
+M.git_branches = function()
+    require("telescope.builtin").git_branches(
+        {
+            attach_mappings = function(_, map)
+                map("i", "<c-d>", require("telescope.actions").git_delete_branch)
                 return true
             end
         }
