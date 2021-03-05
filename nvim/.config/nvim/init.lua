@@ -1,9 +1,3 @@
-require 'plugins'
-require 'options'
-require 'settings'
-require 'lsp'
-require 'binds'
-require 'statusline'
-require 'autocommands'
-require 'utils'
-require 'plugin_config'
+vim.g.mapleader = " "
+
+require "plugins"

@@ -145,7 +145,7 @@ local function line_number_segment()
     return "%#WildMenu# %l:%c "
 end
 
-function _G.statusline()
+function StatusLine()
     local segments = {
         mode_segment(),
         file_segment(),
