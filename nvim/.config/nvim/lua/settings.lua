@@ -20,9 +20,9 @@ vim.g.diagnostic_show_sign = 1
 
 vim.g.netrw_banner = 0
 
-vim.g.rooter_patterns = {
-	'=orca',
-	'=nvim',
-	'=reportgen',
-	'node_modules',
-}
+-- vim.g.rooter_patterns = {
+-- 	'=orca',
+-- 	'=nvim',
+-- 	'=reportgen',
+-- 	'node_modules',
+-- }

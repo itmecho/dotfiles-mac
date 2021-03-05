@@ -16,7 +16,7 @@ return require('packer').startup(function()
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
     use 'tjdevries/astronauta.nvim'
-    use 'airblade/vim-rooter'
+    -- use 'airblade/vim-rooter'
     use 'tpope/vim-commentary'
     use 'tpope/vim-fugitive'
     use 'kyazdani42/nvim-web-devicons'

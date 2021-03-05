@@ -11,9 +11,18 @@ end
 keymap('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
 keymap('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', { expr = true })
 
+-- Project
+keymap('n', '<leader>pcd', '<cmd>lua require("itmecho.telescope").cd_to_project()<CR>')
+keymap('n', '<leader>pss', '<cmd>lua require("itmecho.telescope").search_string()<CR>')
+keymap('n', '<leader>psi', '<cmd>Telescope live_grep<CR>')
+
 -- Files
 keymap('n', '<leader>fl', '<cmd>Telescope find_files<CR>')
 keymap('n', '<C-p>', '<cmd>Telescope find_files<CR>')
+
+-- Quickfix
+keymap('n', '<C-j>', '<cmd>cnext<CR>')
+keymap('n', '<C-k>', '<cmd>cprev<CR>')
 
 -- Buffers
 keymap('n', '<leader>bn', '<cmd>bnext<CR>')
@@ -25,11 +34,6 @@ keymap('n', '<leader>bc', '<cmd>bufdo bd<CR>')
 keymap('n', '<leader>dn', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 keymap('n', '<leader>dp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 keymap('n', '<leader>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
-
--- Search
-keymap('n', '<leader>si', '<cmd>Telescope live_grep<CR>')
-keymap('v', '<leader>si', 'y:Telescope live_grep search="<C-R>0"<CR>')
-keymap('n', '<leader>st', '<cmd>Telescope tags<CR>')
 
 -- Terminal Toggle
 keymap('n', '<leader>tt', '<cmd>BufTermToggle<CR>')
