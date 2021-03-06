@@ -7,7 +7,8 @@ return require("packer").startup(
 
         -- " LSP
         use "neovim/nvim-lspconfig"
-        use "nvim-lua/completion-nvim"
+        -- use "nvim-lua/completion-nvim"
+        use "hrsh7th/nvim-compe"
         use "nvim-lua/lsp_extensions.nvim"
         use {
             "nvim-telescope/telescope.nvim",
