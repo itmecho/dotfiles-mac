@@ -7,4 +7,4 @@ vim.bo.softtabstop = 4
 
 vim.cmd('command! -bang LuaFmt call v:lua.RunFormatCommand("luafmt --stdin")')
 
-vim.cmd('autocmd BufWritePre *.lua LuaFmt')
+vim.cmd("autocmd BufWritePre *.lua LuaFmt")
