@@ -1,7 +1,8 @@
+local tb = require("telescope.builtin")
 local M = {}
 
 M.search_string = function()
-    require("telescope.builtin").grep_string(
+    tb.grep_string(
         {
             prompt_title = "Filter Results",
             search = vim.fn.input("Search for: ")
@@ -10,7 +11,7 @@ M.search_string = function()
 end
 
 M.search_nvim_config = function()
-    require("telescope.builtin").find_files(
+    tb.find_files(
         {
             prompt_title = "Neovim Config",
             cwd = "~/.config/nvim"
@@ -19,7 +20,7 @@ M.search_nvim_config = function()
 end
 
 M.cd_to_project = function()
-    require("telescope.builtin").find_files(
+    tb.find_files(
         {
             prompt_title = "Sparx Projects",
             cwd = "~/src/CloudExperiments",
@@ -46,10 +47,30 @@ M.cd_to_project = function()
 end
 
 M.git_branches = function()
-    require("telescope.builtin").git_branches(
+    tb.git_branches(
         {
             attach_mappings = function(_, map)
                 map("i", "<c-d>", require("telescope.actions").git_delete_branch)
+                return true
+            end
+        }
+    )
+end
+
+M.file_browser = function()
+    tb.file_browser(
+        {
+            hidden = true,
+            attach_mappings = function(_, map)
+                map(
+                    "i",
+                    "<c-d>",
+                    function(bufnr)
+                        local path = require("telescope.actions.state").get_selected_entry(bufnr).value
+                        vim.cmd("cd " .. path)
+                        print("changed directory to " .. path)
+                    end
+                )
                 return true
             end
         }

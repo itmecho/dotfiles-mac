@@ -23,6 +23,7 @@ keymap("n", "<leader>psi", "<cmd>Telescope live_grep<CR>")
 keymap("n", "<leader>fl", "<cmd>Telescope find_files<CR>")
 keymap("n", "<C-p>", "<cmd>Telescope find_files<CR>")
 keymap("n", "<leader>fv", "<cmd>Telescope find_files cwd=~/.config/nvim<CR>")
+keymap("n", "<leader>fb", "<cmd>lua require('itmecho.telescope').file_browser()<CR>")
 
 -- Quickfix
 keymap("n", "<C-j>", "<cmd>cnext<CR>")

@@ -1,5 +1,5 @@
 vim.o.cmdheight = 2
-vim.o.completeopt = "noinsert,menuone,noselect"
+vim.o.completeopt = "menuone,noselect"
 vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.incsearch = true

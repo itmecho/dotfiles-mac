@@ -39,7 +39,7 @@ require("compe").setup {
         path = true,
         buffer = true,
         calc = false,
-        vsnip = true,
+        vsnip = false,
         nvim_lsp = true,
         nvim_lua = true,
         spell = false,
