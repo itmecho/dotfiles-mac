@@ -7,7 +7,6 @@ return require("packer").startup(
 
         -- " LSP
         use "neovim/nvim-lspconfig"
-        -- use "nvim-lua/completion-nvim"
         use "hrsh7th/nvim-compe"
         use "nvim-lua/lsp_extensions.nvim"
         use {
@@ -16,19 +15,14 @@ return require("packer").startup(
         }
         use "nvim-telescope/telescope-fzy-native.nvim"
         use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+        use "glepnir/lspsaga.nvim"
 
         use "tjdevries/astronauta.nvim"
-        -- use 'airblade/vim-rooter'
         use "tpope/vim-commentary"
         use "tpope/vim-fugitive"
         use "kyazdani42/nvim-web-devicons"
-        use "junegunn/fzf"
-        use "junegunn/fzf.vim"
-        use "itmecho/bufterm.nvim"
-        use "chrisbra/Colorizer"
-
-        -- " Language plugins
-        use "sheerun/vim-polyglot"
+        use "itmecho/vterm.nvim"
+        use "pwntester/octo.nvim"
 
         -- Prettier
         use {"prettier/vim-prettier", run = "yarn install"}

@@ -9,6 +9,10 @@ local function mode_segment()
             name = "INSERT",
             color = "DraculaTodo"
         },
+        ic = {
+            name = "INSERT",
+            color = "DraculaTodo"
+        },
         c = {
             name = "COMMAND",
             color = "DraculaDiffText"
@@ -50,14 +54,14 @@ local function file_segment()
         output = output .. string.format("%%#%s#%s", icon_hl, icon)
     end
 
-    return output .. "%#LineNr# %f"
+    return output .. "%#LineNr# %f %m"
 end
 
-local function project_dir_segment()
-    local prefix = "%#LineNr#   "
+-- local function project_dir_segment()
+--     local prefix = "%#LineNr#   "
 
-    return prefix .. (vim.g.itmecho_project or vim.fn.getcwd())
-end
+--     return prefix .. (vim.g.itmecho_project or vim.fn.getcwd())
+-- end
 
 local function lsp_segment()
     local status_prefix = "%#DraculaDiffText#  "
@@ -114,6 +118,13 @@ local function lsp_segment()
     return ok_message
 end
 
+local git_branch = "..."
+
+local function git_branch_segment()
+    git_branch = vim.fn["FugitiveHead"]()
+    return "%#DraculaSearch#  " .. git_branch
+end
+
 local function diagnostic_segment()
     local hint_count = vim.lsp.diagnostic.get_count(0, [[Hint]])
     local info_count = vim.lsp.diagnostic.get_count(0, [[Information]])
@@ -127,15 +138,15 @@ local function diagnostic_segment()
     end
 
     if hint_count > 0 or info_count > 0 then
-        content = content .. "%#DraculaTodo# " .. hint_count + info_count .. " "
+        content = content .. "%#DraculaCyan# I:" .. hint_count + info_count
     end
 
     if warn_count > 0 then
-        content = content .. "%#DraculaDiffText# " .. warn_count .. " "
+        content = content .. "%#DraculaOrange# W:" .. warn_count
     end
 
     if error_count > 0 then
-        content = content .. "%#DraculaRedInverse# " .. error_count .. " "
+        content = content .. "%#DraculaRed# E:" .. error_count
     end
 
     return content
@@ -150,9 +161,10 @@ function StatusLine()
         mode_segment(),
         file_segment(),
         "%=",
-        project_dir_segment(),
+        -- project_dir_segment(),
         lsp_segment(),
         diagnostic_segment(),
+        git_branch_segment(),
         line_number_segment()
     }
 

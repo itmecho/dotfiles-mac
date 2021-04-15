@@ -14,8 +14,24 @@ function RunFormatCommand(cmd)
     vim.fn.winrestview(view)
 end
 
-vim.cmd('command! -bang GoFmt call v:lua.RunFormatCommand("gofmt")')
-vim.cmd('command! -bang GoImports call v:lua.RunFormatCommand("goimports")')
-vim.cmd('command! -bang GoLines call v:lua.RunFormatCommand("golines -m 120 --base-formatter=gofmt")')
+function GoImports()
+    vim.cmd("silent execute '!goimports -w " .. vim.fn.expand("%:p") .. "'")
+    vim.cmd("edit")
+end
 
-vim.cmd("autocmd BufWritePre *.go GoFmt")
+vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+
+vim.cmd("command! -bang GoFmt lua require('itmecho.utils').run_format_command('gofmt')")
+vim.cmd("command! -bang GoImports call v:lua.GoImports()")
+vim.cmd("command! -bang GoLines call v:lua.RunFormatCommand('golines -m 120 --base-formatter=gofmt')")
+
+local utils = require("itmecho.utils")
+
+utils.set_autocommands(
+    "itmecho_go",
+    {
+        {"BufWritePost", "*.go", "GoImports"}
+    }
+)
+
+utils.keymap("n", "<leader>ct", "<cmd>lua require('itmecho.telescope').gotest()<cr>")

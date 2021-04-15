@@ -1,7 +1,16 @@
-vim.cmd([[autocmd BufWritePost plugins.lua PackerCompile]])
-vim.cmd([[autocmd BufWritePre * call v:lua.RemoveTrailingWhitespace() ]])
-vim.cmd(
-    [[autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync]]
+function RemoveTrailingWhiteSpace()
+    local view = vim.fn.winsaveview()
+    vim.cmd([[keeppatterns %s/\s\+$//e]])
+    vim.fn.winrestview(view)
+end
+
+require("itmecho.utils").set_autocommands(
+    "itmecho_general",
+    {
+        {"BufWritePost", "plugins.lua", "PackerCompile"},
+        {"BufWritePre", "*", "call v:lua.RemoveTrailingWhiteSpace()"},
+        {"BufWritePre", "*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html", "PrettierAsync"},
+        {"ColorScheme", "*", "lua require('nvim-web-devicons').setup()"},
+        {"User", "LspProgressUpdate", "redrawstatus!"}
+    }
 )
-vim.cmd([[autocmd ColorScheme * lua require('nvim-web-devicons').setup()]])
--- vim.cmd([[autocmd User LspProgressUpdate redrawstatus!]])

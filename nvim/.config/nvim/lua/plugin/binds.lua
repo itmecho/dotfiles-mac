@@ -1,17 +1,9 @@
-local function keymap(mode, lhs, rhs, extra_opts)
-    extra_opts = extra_opts or {}
-    local opts = {
-        noremap = true,
-        silent = true
-    }
-    for k, v in pairs(extra_opts) do
-        opts[k] = v
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
+local keymap = require("itmecho.utils").keymap
 
 keymap("i", "<Tab>", 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 keymap("i", "<S-Tab>", 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
+keymap("i", "<C-Space>", "compe#complete()", {expr = true})
+keymap("i", "<CR>", "compe#confirm('<CR>')", {expr = true})
 
 -- Project
 keymap("n", "<leader>po", '<cmd>lua require("itmecho.telescope").cd_to_project()<CR>')
@@ -36,31 +28,45 @@ keymap("n", "<leader>bl", "<cmd>Telescope buffers<CR>")
 keymap("n", "<leader>bc", "<cmd>bufdo bd<CR>")
 
 -- Diagnostics
-keymap("n", "<leader>dn", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-keymap("n", "<leader>dp", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
+keymap("n", "<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+keymap("n", "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap("n", "<leader>dl", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
 
--- Terminal Toggle
-keymap("n", "<leader>tt", "<cmd>BufTermToggle<CR>")
-keymap("n", "<leader>tn", "<cmd>BufTermToggle<CR><C-\\><C-n>")
-keymap("t", "<leader>tt", "<cmd>BufTermToggle<CR>")
+-- Terminal
+keymap("n", "<leader>tt", "<cmd>VtermToggle<CR>")
+keymap("n", "<leader>ts", ":VtermSendCommand ", {silent = true})
+keymap("n", "<leader>tr", "<cmd>VtermRerunCommand<CR>")
+keymap("n", "<leader>tc", "<cmd>VtermClose<CR>")
 keymap("t", "<leader>tn", "<C-\\><C-n>")
 
+-- Terminal shortcuts
+keymap("n", "<leader>Ou", "<cmd>lua require('itmecho.telescope').orca()<CR>")
+
 -- LSP Bindings
-keymap("n", "<leader>vd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+keymap("n", "<leader>vd", "<cmd>Lspsaga preview_definition<CR>")
+keymap("n", "<leader>vf", "<cmd>Lspsaga lsp_finder<CR>")
+keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+keymap("n", "<leader>vs", "<cmd>Lspsaga signature_help<CR>")
+keymap("n", "<leader>vr", "<cmd>Lspsaga rename<CR>")
+keymap("n", "<leader>va", "<cmd>Lspsaga code_action<CR>")
+keymap("n", "<C-f>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>")
+keymap("n", "<C-b>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>")
+
+-- Built in
 keymap("n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
-keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-keymap("n", "<leader>vi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-keymap("n", "<leader>vs", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-keymap("n", "<leader>vt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-keymap("n", "<leader>vr", "<cmd>lua vim.lsp.buf.references()<CR>")
-keymap("n", "<leader>vs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-keymap("n", "<leader>vS", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
-keymap("n", "<leader>vD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-keymap("n", "<leader>vf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>")
-keymap("n", "<leader>va", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-keymap("n", "<leader>vR", "<cmd>lua vim.lsp.buf.rename()<CR>")
-keymap("n", "<leader>vx", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR><cmd>edit<CR>")
+-- keymap("n", "<leader>vd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+-- keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+-- keymap("n", "<leader>vi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+-- keymap("n", "<leader>vs", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+-- keymap("n", "<leader>vt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+-- keymap("n", "<leader>vr", "<cmd>lua vim.lsp.buf.references()<CR>")
+-- keymap("n", "<leader>vs", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
+-- keymap("n", "<leader>vS", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
+-- keymap("n", "<leader>vD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+-- keymap("n", "<leader>vf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>")
+-- keymap("n", "<leader>va", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+-- keymap("n", "<leader>vR", "<cmd>lua vim.lsp.buf.rename()<CR>")
+-- keymap("n", "<leader>vx", "<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR><cmd>edit<CR>")
 
 -- Git bindings
 keymap("n", "<leader>gs", "<cmd>Gstatus<CR>")
@@ -69,11 +75,11 @@ keymap("n", "<leader>gp", "<cmd>G push<CR>")
 keymap("n", "<leader>gb", "<cmd>lua require('itmecho.telescope').git_branches()<CR>")
 
 -- Disable arrow keys
-local keys = {"<up>", "<down>", "<left>", "<right>"}
-for _, key in ipairs(keys) do
-    keymap("i", key, "<nop>")
-    keymap("n", key, "<nop>")
-end
+-- local keys = {"<up>", "<down>", "<left>", "<right>"}
+-- for _, key in ipairs(keys) do
+--     keymap("i", key, key)
+--     keymap("n", key, key)
+-- end
 
 -- Esc clears search highlights
 keymap("n", "<esc>", "<cmd>noh<CR><esc>")

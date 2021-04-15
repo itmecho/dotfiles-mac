@@ -1,8 +1,10 @@
 vim.o.cmdheight = 2
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menuone,noinsert,noselect"
 vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.incsearch = true
+vim.o.list = true
+vim.o.listchars = "eol:↵,tab:» "
 vim.o.mouse = ""
 vim.o.scrolloff = 50
 vim.o.shell = "/usr/local/bin/fish"
@@ -32,6 +34,10 @@ vim.bo.softtabstop = 0
 vim.bo.tabstop = 4
 
 vim.wo.cursorline = true
+vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+vim.wo.foldlevel = 200
+vim.wo.foldmethod = "expr"
+vim.wo.list = true
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.wo.signcolumn = "yes"
