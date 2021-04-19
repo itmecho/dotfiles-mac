@@ -9,6 +9,10 @@ local function on_attach()
     -- )
 end
 
+nvim_lsp.dartls.setup {
+    on_attach = on_attach
+}
+
 nvim_lsp.gopls.setup {
     on_attach = on_attach
 }

@@ -33,11 +33,15 @@ keymap("n", "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap("n", "<leader>dl", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
 
 -- Terminal
-keymap("n", "<leader>tt", "<cmd>VtermToggle<CR>")
-keymap("n", "<leader>ts", ":VtermSendCommand ", {silent = true})
-keymap("n", "<leader>tr", "<cmd>VtermRerunCommand<CR>")
-keymap("n", "<leader>tc", "<cmd>VtermClose<CR>")
+keymap("n", "<leader>tt", "<cmd>NeotermInteractive<CR>")
+keymap("n", "<leader>T", "<cmd>NeotermToggle<CR>")
+keymap("n", "<leader>ts", ":NeotermRun ", {silent = false})
+keymap("n", "<leader>tr", "<cmd>NeotermRerun<CR>")
+keymap("n", "<leader>tx", "<cmd>NeotermExit<CR>")
 keymap("t", "<leader>tn", "<C-\\><C-n>")
+keymap("t", "<leader>tt", "<cmd>NeotermInteractive<CR>")
+keymap("t", "<leader>T", "<cmd>NeotermToggle<CR>")
+keymap("t", "<leader>tx", "<cmd>NeotermExit<CR>")
 
 -- Terminal shortcuts
 keymap("n", "<leader>Ou", "<cmd>lua require('itmecho.telescope').orca()<CR>")

@@ -22,7 +22,6 @@ require("telescope").setup(
 )
 
 require("telescope").load_extension("fzy_native")
-require("telescope").load_extension("octo")
 
 require("nvim-web-devicons").setup()
 
@@ -56,3 +55,20 @@ require("compe").setup(
         }
     }
 )
+
+vim.g.dashboard_default_executive = "telescope"
+vim.g.dashboard_custom_header = {
+    "::::    ::: :::::::::: ::::::::  :::     ::: ::::::::::: ::::    :::: ",
+    ":+:+:   :+: :+:       :+:    :+: :+:     :+:     :+:     +:+:+: :+:+:+",
+    ":+:+:+  +:+ +:+       +:+    +:+ +:+     +:+     +:+     +:+ +:+:+ +:+",
+    "+#+ +:+ +#+ +#++:++#  +#+    +:+ +#+     +:+     +#+     +#+  +:+  +#+",
+    "+#+  +#+#+# +#+       +#+    +#+  +#+   +#+      +#+     +#+       +#+",
+    "#+#   #+#+# #+#       #+#    #+#   #+#+#+#       #+#     #+#       #+#",
+    "###    #### ########## ########      ###     ########### ###       ###"
+}
+vim.g.dashboard_custom_section = {
+    a = {description = {"  Open Project       "}, command = "lua require('itmecho.telescope').cd_to_project()"},
+    b = {description = {"  Find File          "}, command = "Telescope find_files"},
+    c = {description = {"  Recently Used Files"}, command = "Telescope oldfiles"},
+    d = {description = {"  Neovim Config      "}, command = "Telescope find_files cwd=~/.config/nvim"}
+}

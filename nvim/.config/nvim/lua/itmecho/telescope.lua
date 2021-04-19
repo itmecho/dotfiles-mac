@@ -6,7 +6,7 @@ local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
 local state = require("telescope.actions.state")
 
-local vterm = require("vterm")
+local neoterm = require("neoterm")
 
 local M = {}
 
@@ -40,7 +40,7 @@ M.orca = function()
                     "i",
                     "<cr>",
                     function()
-                        vterm.run("clear && orca variant update " .. state.get_selected_entry().value)
+                        neoterm.run("orca variant update " .. state.get_selected_entry().value)
                         actions.close(prompt_bufnr)
                     end
                 )
@@ -48,7 +48,7 @@ M.orca = function()
                     "i",
                     "<C-l>",
                     function()
-                        vterm.run("clear && orca variant logs " .. state.get_selected_entry().value)
+                        neoterm.run("orca variant logs " .. state.get_selected_entry().value)
                         actions.close(prompt_bufnr)
                     end
                 )
@@ -68,7 +68,7 @@ M.gotest = function()
                     "i",
                     "<cr>",
                     function()
-                        vterm.run("clear && go test ./" .. state.get_selected_entry().value .. "/...")
+                        neoterm.run("go test ./" .. state.get_selected_entry().value .. "/...")
                         actions.close(prompt_bufnr)
                     end
                 )
