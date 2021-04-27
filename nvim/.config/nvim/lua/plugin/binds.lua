@@ -6,18 +6,25 @@ keymap("i", "<C-Space>", "compe#complete()", {expr = true})
 keymap("i", "<CR>", "compe#confirm('<CR>')", {expr = true})
 
 -- Project
-keymap("n", "<leader>po", '<cmd>lua require("itmecho.telescope").cd_to_project()<CR>')
+keymap("n", "<leader>po",
+       '<cmd>lua require("itmecho.telescope").cd_to_project()<CR>')
 keymap("n", "<leader>pr", "<cmd>cd ~/src/CloudExperiments<CR>")
-keymap("n", "<leader>pss", '<cmd>lua require("itmecho.telescope").search_string()<CR>')
+keymap("n", "<leader>pss",
+       '<cmd>lua require("itmecho.telescope").search_string()<CR>')
 keymap("n", "<leader>psi", "<cmd>Telescope live_grep<CR>")
 
 -- Files
 keymap("n", "<leader>fl", "<cmd>Telescope find_files<CR>")
 keymap("n", "<C-p>", "<cmd>Telescope find_files<CR>")
-keymap("n", "<leader>fv", "<cmd>Telescope find_files cwd=~/.config/nvim<CR>")
-keymap("n", "<leader>fb", "<cmd>lua require('itmecho.telescope').file_browser()<CR>")
+keymap("n", "<leader>fb",
+       "<cmd>lua require('itmecho.telescope').file_browser()<CR>")
+
+-- Edit
+keymap("n", "<leader>ev", "<cmd>Telescope find_files cwd=~/.config/nvim<CR>")
 
 -- Quickfix
+keymap("n", "<leader>qo", "<cmd>copen<CR>")
+keymap("n", "<leader>qc", "<cmd>cclose<CR>")
 keymap("n", "<C-j>", "<cmd>cnext<CR>")
 keymap("n", "<C-k>", "<cmd>cprev<CR>")
 
@@ -31,6 +38,8 @@ keymap("n", "<leader>bc", "<cmd>bufdo bd<CR>")
 keymap("n", "<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 keymap("n", "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap("n", "<leader>dl", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
+keymap("n", "<leader>dd", "<cmd>LspTroubleDocumentToggle<CR>")
+keymap("n", "<leader>dw", "<cmd>LspTroubleWorkspaceToggle<CR>")
 
 -- Terminal
 keymap("n", "<leader>tt", "<cmd>NeotermInteractive<CR>")
@@ -44,17 +53,19 @@ keymap("t", "<leader>T", "<cmd>NeotermToggle<CR>")
 keymap("t", "<leader>tx", "<cmd>NeotermExit<CR>")
 
 -- Terminal shortcuts
-keymap("n", "<leader>Ou", "<cmd>lua require('itmecho.telescope').orca()<CR>")
+keymap("n", "<leader>o", "<cmd>lua require('itmecho.telescope').orca()<CR>")
 
 -- LSP Bindings
 keymap("n", "<leader>vd", "<cmd>Lspsaga preview_definition<CR>")
-keymap("n", "<leader>vf", "<cmd>Lspsaga lsp_finder<CR>")
 keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 keymap("n", "<leader>vs", "<cmd>Lspsaga signature_help<CR>")
-keymap("n", "<leader>vr", "<cmd>Lspsaga rename<CR>")
+keymap("n", "<leader>vr", "yiw:Lspsaga rename<CR><c-r>0")
+keymap("n", "<leader>vR", "<cmd>lua vim.lsp.buf.references()<CR>")
 keymap("n", "<leader>va", "<cmd>Lspsaga code_action<CR>")
-keymap("n", "<C-f>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>")
-keymap("n", "<C-b>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>")
+keymap("n", "<C-f>",
+       "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>")
+keymap("n", "<C-b>",
+       "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>")
 
 -- Built in
 keymap("n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
@@ -76,7 +87,8 @@ keymap("n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>")
 keymap("n", "<leader>gs", "<cmd>Gstatus<CR>")
 keymap("n", "<leader>gl", "<cmd>G pull<CR>")
 keymap("n", "<leader>gp", "<cmd>G push<CR>")
-keymap("n", "<leader>gb", "<cmd>lua require('itmecho.telescope').git_branches()<CR>")
+keymap("n", "<leader>gb",
+       "<cmd>lua require('itmecho.telescope').git_branches()<CR>")
 
 -- Disable arrow keys
 -- local keys = {"<up>", "<down>", "<left>", "<right>"}

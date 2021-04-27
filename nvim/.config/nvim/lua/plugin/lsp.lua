@@ -23,9 +23,9 @@ nvim_lsp.rust_analyzer.setup {
 
 nvim_lsp.sumneko_lua.setup {
     cmd = {
-        "/Users/iainearl/src/lua-language-server/bin/macOS/lua-language-server",
+        "/usr/bin/lua-language-server",
         "-E",
-        "/Users/iainearl/src/lua-language-server/main.lua"
+        "/usr/share/lua-language-server/main.lua"
     },
     on_attach = on_attach,
     settings = {

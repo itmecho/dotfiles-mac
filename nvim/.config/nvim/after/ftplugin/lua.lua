@@ -5,7 +5,7 @@ vim.bo.tabstop = 4
 vim.bo.shiftwidth = 4
 vim.bo.softtabstop = 4
 
-vim.cmd('command! -bang LuaFmt lua require("itmecho.utils").run_format_command("luafmt --stdin")')
+vim.cmd('command! -bang LuaFmt lua require("itmecho.utils").run_format_command("lua-format")')
 
 require("itmecho.utils").set_autocommands(
     "itmecho_lua",
