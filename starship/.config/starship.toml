@@ -12,6 +12,7 @@ $character\
 
 [kubernetes]
 disabled = false
+format = 'on [$context:$namespace]($style) '
 style = "purple"
 symbol = ""
 
