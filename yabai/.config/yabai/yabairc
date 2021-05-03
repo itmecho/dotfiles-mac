@@ -45,8 +45,14 @@ yabai -m config left_padding                 12
 yabai -m config right_padding                12
 yabai -m config window_gap                   06
 
+yabai -m rule --add app="^Firefox$" title="^Opening" manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^pCloud Drive$" manage=off
+yabai -m rule --add app="^OpenVPN Connect$" manage=off
+yabai -m rule --add app="^Android Studio$" title="^Welcome to Android Studio$" manage=off
+if [ $(yabai -m query --displays | jq '. | length') -eq 3 ]; then
+	yabai -m rule --add app="^Microsoft Excel$" display=3
+fi
 
 echo "yabai configuration loaded.."
